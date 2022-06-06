@@ -1,10 +1,15 @@
 import { createApp } from 'vue';
 
+import router from './router.js';
+import store from './store/index.js';
 import App from './App.vue';
-import FriendContact from './components/FriendContact.vue';
+import BaseBadge from './components/ui/BaseBadge.vue';
 
-const app = createApp(App);
+const app = createApp(App)
 
-app.component('friend-contact', FriendContact);
+app.use(router);
+app.use(store);
+
+app.component('base-badge', BaseBadge);
 
 app.mount('#app');
