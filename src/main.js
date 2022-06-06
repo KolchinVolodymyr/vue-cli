@@ -1,27 +1,15 @@
 import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
 
+import router from './router.js';
+import store from './store/index.js';
 import App from './App.vue';
-import BaseModal from './components/BaseModal.vue';
-import AllUsers from './pages/AllUsers.vue';
-import CourseGoals from './pages/CourseGoals.vue';
+import BaseBadge from './components/ui/BaseBadge.vue';
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    { path: '/', component: AllUsers },
-    { path: '/goals', component: CourseGoals }
-  ]
-});
-
-const app = createApp(App);
-
-app.component('base-modal', BaseModal);
+const app = createApp(App)
 
 app.use(router);
+app.use(store);
 
-router.isReady().then(function() {
-  app.mount('#app');
-});
+app.component('base-badge', BaseBadge);
 
-
+app.mount('#app');
