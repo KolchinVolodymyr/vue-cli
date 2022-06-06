@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
 
 import App from './App.vue';
-import FriendContact from './components/FriendContact.vue';
+import router from './router.js';
 
 const app = createApp(App);
 
-app.component('friend-contact', FriendContact);
+app.use(router);
 
 app.mount('#app');
