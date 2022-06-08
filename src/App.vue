@@ -1,92 +1,58 @@
 <template>
-  <section>
-    <header>
-      <h1>My Friends</h1>
-    </header>
-    <ul>
-      <friend-contact></friend-contact>
-      <friend-contact></friend-contact>
-    </ul>
-  </section>
+  <the-header></the-header>
+  <router-view v-slot="slotProps">
+    <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
+  </router-view>
 </template>
 
 <script>
+import TheHeader from './components/layout/TheHeader.vue';
+
 export default {
-  data() {
-    return {
-      friends: [
-        {
-          id: "manuel",
-          name: "Manuel Lorenz",
-          phone: "0123 45678 90",
-          email: "manuel@localhost.com",
-        },
-        {
-          id: "julie",
-          name: "Julie Jones",
-          phone: "0987 654421 21",
-          email: "julie@localhost.com",
-        },
-      ],
-    };
-  },
-};
+  components: {
+    TheHeader
+  }  
+}
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 * {
   box-sizing: border-box;
 }
+
 html {
-  font-family: "Jost", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
+
 body {
   margin: 0;
 }
-header {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 3rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: #58004d;
-  color: white;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
+
+.route-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
 }
-#app ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+
+.route-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
-#app li {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
+
+.route-enter-active {
+  transition: all 0.3s ease-out;
 }
-#app h2 {
-  font-size: 2rem;
-  border-bottom: 4px solid #ccc;
-  color: #58004d;
-  margin: 0 0 1rem 0;
+
+.route-leave-active {
+  transition: all 0.3s ease-in;
 }
-#app button {
-  font: inherit;
-  cursor: pointer;
-  border: 1px solid #ff0077;
-  background-color: #ff0077;
-  color: white;
-  padding: 0.05rem 1rem;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
-}
-#app button:hover,
-#app button:active {
-  background-color: #ec3169;
-  border-color: #ec3169;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
