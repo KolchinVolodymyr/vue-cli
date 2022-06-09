@@ -1,73 +1,68 @@
 <template>
-  <the-header></the-header>
-  <router-view v-slot="slotProps">
-    <transition name="route" mode="out-in">
-      <component :is="slotProps.Component"></component>
-    </transition>
-  </router-view>
+  <main>
+    <user-list :users="activeUsers" @list-projects="selectUser"></user-list>
+    <projects-list :user="selectedUser"></projects-list>
+  </main>
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
+import { ref } from 'vue';
+
+import USER_DATA from './dummy-data.js';
+
+import UserList from './components/users/UserList.vue';
+import ProjectsList from './components/projects/ProjectsList.vue';
 
 export default {
   components: {
-    TheHeader
+    UserList,
+    ProjectsList,
   },
-  computed: {
-    didAutoLogout() {
-      return this.$store.getters.didAutoLogout;
+  setup() {
+    const selectedUser = ref(null);
+    const activeUsers = USER_DATA;
+
+    function selectUser(uid) {
+      selectedUser.value = activeUsers.find((usr) => usr.id === uid);
     }
+
+    return { selectedUser, activeUsers, selectUser };
   },
-  created() {
-    this.$store.dispatch('tryLogin');
-  },
-  watch: {
-    didAutoLogout(curValue, oldValue) {
-      if (curValue && curValue !== oldValue) {
-        this.$router.replace('/coaches');
-      }
-    }
-  }
-}
+};
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-
 * {
   box-sizing: border-box;
 }
-
 html {
-  font-family: "Roboto", sans-serif;
+  font-family: sans-serif;
 }
-
 body {
   margin: 0;
 }
 
-.route-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
+main {
+  display: flex;
+  justify-content: space-around;
 }
 
-.route-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
+button {
+  font: inherit;
+  border: 1px solid #00006b;
+  background-color: transparent;
+  color: #00006b;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+button:hover,
+button:active {
+  background-color: #efefff;
 }
 
-.route-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.route-leave-active {
-  transition: all 0.3s ease-in;
-}
-
-.route-enter-to,
-.route-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+button.selected {
+  background-color: #00006b;
+  color: white;
 }
 </style>
