@@ -1,10 +1,12 @@
 import { createApp } from 'vue';
 
+import BaseSearch from './components/UI/BaseSearch.vue';
+import BaseContainer from './components/UI/BaseContainer.vue';
 import App from './App.vue';
-import FriendContact from './components/FriendContact.vue';
 
 const app = createApp(App);
 
-app.component('friend-contact', FriendContact);
+app.component('base-search', BaseSearch);
+app.component('base-container', BaseContainer);
 
 app.mount('#app');
